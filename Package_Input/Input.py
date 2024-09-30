@@ -12,7 +12,7 @@ def get_int(mensaje:str, mensaje_error:str, minimo:int, maximo:int, reintentos:i
             retorno = numero
         else:
             print(mensaje_error)
-            get_int(mensaje,mensaje_error, minimo, maximo, reintentos-1)
+            retorno = get_int(mensaje,mensaje_error, minimo, maximo, reintentos-1)
     return retorno
 
 def get_float(mensaje:str, mensaje_error:str, minimo:int, maximo:int, reintentos:int)-> int | None:
@@ -27,7 +27,7 @@ def get_float(mensaje:str, mensaje_error:str, minimo:int, maximo:int, reintentos
             retorno = numero
         else:
             print(mensaje_error)
-            get_int(mensaje,mensaje_error, minimo, maximo, reintentos-1)
+            retorno = get_float(mensaje,mensaje_error, minimo, maximo, reintentos-1)
     return retorno
 
 
@@ -47,7 +47,7 @@ def get_string(mensaje:str, mensaje_error:str, maximo:int, reintentos:int)-> str
             retorno = cadena
         else:
             print(mensaje_error)
-            get_string(mensaje,mensaje_error, maximo, reintentos-1)
+            retorno = get_string(mensaje,mensaje_error, maximo, reintentos-1)
     
     return retorno
     

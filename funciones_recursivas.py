@@ -2,9 +2,9 @@ from Package_Input import Input
 
 #Ejercicio en clase "Numeros primos"
 """ def primo(numero:int, i = 2, cont = 0) -> bool:
-    #La funcion regresa:
-    #       True si el numero es primo
-    #       False si el numero NO es primo
+    ''' La funcion regresa:
+           True si el numero es primo
+           False si el numero NO es primo '''
     retorno = True
     if i < numero:
         resultado = numero % i
@@ -13,8 +13,7 @@ from Package_Input import Input
         else:
             primo(numero, i + 1)
     return retorno
-    
-    
+
 number = int(input("Ingrese un numero mayor que 1 que desee saber si es primo. "))
 while number < 2:
     number = int(input("Numero invalido. Ingrese un numero mayor que 1. "))
@@ -26,9 +25,9 @@ else:
     
 #1
 
-def sumar_naturales(numero:int, suma=0) -> int:
-    # La funcion suma los numeros desde el 1 hasta el numero ingresado por parametro
-    # Devuelve el resultado de la suma
+""" def sumar_naturales(numero:int, suma=0) -> int:
+    ''' La funcion suma los numeros desde el 1 hasta el numero ingresado por parametro
+     Devuelve el resultado de la suma '''
 
     suma += numero
     if numero == 0:
@@ -40,7 +39,7 @@ def sumar_naturales(numero:int, suma=0) -> int:
 numero = int(input("Ingrese un numero natural para calcular. "))
 while numero <= 0:
     numero = int(input("Numero invalido, debe ser mayor a 0"))
-print("La suma de los numeros naturales hasta el numero ingresado es: ", sumar_naturales(numero))
+print("La suma de los numeros naturales hasta el numero ingresado es: ", sumar_naturales(numero)) """
 
 #2
 
@@ -72,13 +71,20 @@ print("La suma de los digitos es: ", sumar_digitos(numero, digitos)) """
 
 #4
 
-# def calcular_fibonacci(limite:int, numero_uno = 0, numero_dos = 1):
-#     """ Imprime la secuencia Fibonacci hasta el numero ingresado como 'limite' """
-#     fibonacci = numero_uno + numero_dos
-#     if fibonacci <= limite:
-#         print(fibonacci)
-#         calcular_fibonacci(limite, numero_dos, fibonacci)
-        
+def calcular_fibonacci(numero:int):
+    
+    if numero == 0:
+        retorno = 0
+    elif numero == 1:
+        retorno = 1
+    else:
+        retorno = calcular_fibonacci(numero-1) + calcular_fibonacci(numero-2)
+    
+    return retorno
 
-# limite = Input.get_int()
-# calcular_fibonacci(limite)
+numero = Input.get_int("Ingrese un numero mayor a cero y menor a 100 para calcular el Fibonacci", "El numero tiene que ser positivo", 1, 100, 3)
+
+if type(numero) == int:
+    print(calcular_fibonacci(numero))
+else: 
+    print("Cerrando programa - No se ingreso un numero correcto")

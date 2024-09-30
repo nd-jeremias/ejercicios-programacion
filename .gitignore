@@ -1,0 +1,4 @@
+# ignore all .pdf files
+*.pdf
+/Ejercicio Menu/__pycache__
+/Pakage_Input/__pycache__

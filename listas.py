@@ -1,23 +1,37 @@
-from Package_Input.Validate import validate_number
+from Package_Input.Input import *
 
 #1
-""" def get_list(lista:list, mensaje:str) -> list:
+""" def get_list(lista:list) -> list:
+    
+    ''' Funcion que recibe una lista vacia y la completa con nombres '''
+    
     for i in range(len(lista)):
-        lista[i] = input(mensaje)
-    return lista
+        lista[i] = get_string("Ingrese un nombre de maximo 15 caracteres: ", "Se ha excedido en la cantidad de caracteres. Vuelva a intentarlo", 15, 3)
         
-lista_nombres = [" "] * 3
+    return lista
 
-print(get_list(lista_nombres, "Ingrese su nombre: ")) """
+cant = 10
+lista_nombres = [" "] * cant
+
+print(get_list(lista_nombres)) """
 
 #2
 """ def get_random_list() -> list:
+    
+    ''' Se inicializa una lista de 10 elementos en 0. 
+    Luego se pide al usuario que ingrese los numeros que desea guardar y en que ubicacion. '''
+    
     control = 's'
     lista = [0] * 10
     while control == 's':
         numero = int(input("Ingrese un numero: "))
-        index = int(input("Ingrese la posicion del numero: (1-10) "))
-        lista [index-1] = numero
+        index = get_int("Ingrese la posicion del numero: (1-10) ", "Error- Fuera de rango", 1, 10, 3)
+        if type(index) == int:
+            lista [index-1] = numero
+        else:
+            print("Se excedio en el limite de intentos. Vuelva a comenzar.")
+            lista = []
+            break
         control = input("Desea seguir guardando numeros? s/n").lower()
         while control != 's' and control != 'n':
             control = input("Ingrese una opcion valida: s/n").lower()
@@ -27,24 +41,32 @@ print(get_list(lista_nombres, "Ingrese su nombre: ")) """
 print(get_random_list()) """
 
 #3
-""" def get_lista_numeros(minimo = 0, maximo = 100) -> list:
+""" def get_lista_numeros() -> list:
 
-    largo_lista = 5
+    ''' Se piden 10 numeros dentro de un rango y se guardan en una lista.
+    El rango se valida dentro de la funcion get_int()'''
+    
+    largo_lista = 10
     lista = [0] * largo_lista
     
-    for i in range(largo_lista):
-        lista[i] = int(input(f"Ingrese un numero entre {minimo} y {maximo}: "))
-        while validate_number(lista[i], minimo, maximo) == False:
-            print("Numero fuera de rango. Ingreselo nuevamente: ")
-            lista [i] = int(input(f"El numero tiene que estar entre {minimo} y {maximo}: "))
-            validate_number(lista[i], minimo, maximo)
-
+    for i in range(len(lista)):
+        
+        lista[i] = get_int("Ingrese un numero entre 0 y 100", "Error- el numero esta fuera de rango. Vuelva a intentarlo.", 0, 100, 3)
+        if type(lista[i]) != int:
+            lista = []
+            print("Se excedio en el limite de intentos. Vuelva a comenzar.")
+            break
+        
     return lista
 
-print(get_lista_numeros(5, 10)) """
+print(get_lista_numeros()) """
 
 #4
 """ def search_list(lista:list, numero:int) -> bool:
+
+    ''' Se recibe una lista de numeros y un numero especifico por parametros.
+    Se busca dicho numero en la lista y se retorna True al encontrarlo. False si no se encuentra.'''
+
     retorno = False
     for i in range(len(lista)):
         if numero == lista[i]:
@@ -52,21 +74,36 @@ print(get_lista_numeros(5, 10)) """
     return retorno """
 
 #5
-def search_age(nombres:list, edades:list, limite) -> list:
+""" def search_age(edades:list) -> list:
     
-    retorno = []
+    ''' Se busca dentro de la lista pasada por paremtro las personas de menor edad '''
+    
+    menor = edades[0]
+    lista = []
     for i in range(len(edades)):
-        if edades[i] <= limite:
-            #print(f"{nombres[i]} tiene {edades[i]}. Es menor de {limite} años")
-            retorno.append([nombres[i],edades[i]])
-        #print("Vuelta: ", i, "Retorno: ", retorno)
-    return retorno
+        if edades[i] <= menor:
+            menor = edades[i]
+    for i in range(len(edades)):
+        if edades[i] == menor:
+            lista.append(i)
+    
+    return lista
 
 nombres = ["Ana","Luis","Juan","Sol","Roberto","Sonia","Ulises","Sofia","Maria","Pedro","Antonio", "Eugenia", "Soledad", "Mario", "Mariela"]
-edades = [32, 45, 34, 22, 46, 23, 45, 67, 37, 68, 25, 55, 45, 27, 43]
+edades = [23, 45, 34, 25, 46, 23, 45, 67, 37, 68, 25, 55, 45, 27, 43]
 
-lista_filtrada = search_age(nombres, edades, 24)
+index = search_age(edades)
+print("Los mas jovenes son: ")
+for i in range(len(index)):
+    print(f"        {nombres[index[i]]} con {edades[index[i]]}") """
+    
+#6
+""" from listas_personas import names
 
-for i in range(len(lista_filtrada)):
-    for j in range(len(lista_filtrada[i])):
-        print(lista_filtrada[i][j])
+def mostrar_lista(lista:list) -> None:
+    for i in range(0, len(lista), 2):
+        print(f"{i+1}: {lista[i]}       -    {i+2}: {lista[i+1]}")
+
+nombres = names
+
+mostrar_lista(nombres) """

@@ -8,7 +8,7 @@ def get_int(mensaje:str, mensaje_error:str, minimo:int, maximo:int, reintentos:i
     retorno = None
     if reintentos > 0:
         numero = int(input(mensaje))
-        if validate_number(numero, minimo, maximo):
+        if validate_range(numero, minimo, maximo):
             retorno = numero
         else:
             print(mensaje_error)
@@ -23,16 +23,12 @@ def get_float(mensaje:str, mensaje_error:str, minimo:int, maximo:int, reintentos
     retorno = None
     if reintentos >= 0:
         numero = float(input(mensaje))
-        if validate_number(numero, minimo, maximo):
+        if validate_range(numero, minimo, maximo):
             retorno = numero
         else:
             print(mensaje_error)
             retorno = get_float(mensaje,mensaje_error, minimo, maximo, reintentos-1)
     return retorno
-
-
-#  -------------------------- ME DEVUELVE NONE en la segunda vuelta CORREGIR ==> cuando vuelve a la primer funcion no tiene nada
-# -----------------------------LAS FUNCIONES RECURSIVAS LLEVAN SIEMPRE 2 RETORNOS?
 
 def get_string(mensaje:str, mensaje_error:str, maximo:int, reintentos:int)-> str | None:
     

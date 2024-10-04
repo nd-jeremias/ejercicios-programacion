@@ -1,19 +1,29 @@
+from Paquete.Validate import *
 from Paquete.utilidades import *
+from os import system
 
 def menu() -> int:
+    system("cls")
     print("Seleccione una opcion: ")
     opcion = int(input(""" 
-          1 - Importar listas 
-          2 - Listar los datos de los usuarios de México 
-          3 - Listar los nombres, mails y teléfonos de los usuarios de Brasil 
-          4 - Listar los datos del/los usuario/s más joven/es 
-          5 - Obtener un promedio de edad de los usuarios
-          6 - De los usuarios de Brasil, listar los datos del usuario de mayor edad 
-          7 - Listar los datos de los usuarios de México y Brasil cuyo código postal sea mayor a 8000 
-          8 - Listar nombre, mail y teléfono de los usuarios italianos mayores a 40 años 
+         01 - Importar listas 
+         02 - Listar los datos de los usuarios de México 
+         03 - Listar los nombres, mails y teléfonos de los usuarios de Brasil 
+         04 - Listar los datos del/los usuario/s más joven/es 
+         05 - Obtener un promedio de edad de los usuarios
+         06 - De los usuarios de Brasil, listar los datos del usuario de mayor edad 
+         07 - Listar los datos de los usuarios de México y Brasil cuyo código postal sea mayor a 8000 
+         08 - Listar nombre, mail y teléfono de los usuarios italianos mayores a 40 años
+         09 - Listar los datos de los usuarios de México ordenados por nombre 
+         10 - Listar los datos del/los usuario/s más joven/es ordenados por edad de manera ascendente (Si la edad se repite, ordenar por nombre de manera ascendente) 
+         11 - Listar los datos de los usuarios de México y Brasil cuyo código postal sea mayor a 8000 ordenado por nombre y edad de manera descendente
           0 - Salir 
           """))
-    return opcion
+    if validate_range(opcion, 0, 11):
+        retorno = opcion
+    else:
+        retorno = menu()
+    return retorno
 
 def opcion_dos(listado) -> None:
     
@@ -72,3 +82,11 @@ def opcion_ocho(listado) -> None:
     for i in range(len(posiciones)):
         if edades[posiciones[i]] > 40:
             print_partial(listado, posiciones[i])
+
+def opcion_nueve(listado) -> None:
+    lista_filtrada = []
+    paises = listado.country
+    posiciones = filtrar_pais(paises, "Mexico")
+    
+
+    print(ordenar_descendente(lista_filtrada))

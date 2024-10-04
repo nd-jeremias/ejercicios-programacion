@@ -89,3 +89,13 @@ def print_partial(listado, posicion):
              ->  Telefono:  {listado.phones[posicion]}
              ->  Mail:      {listado.mails[posicion]}
             """)
+    
+def ordenar_descendente(lista:list, posicion:list) -> list:
+    for i in range(len(lista)-1):
+        for j in range(i+1, len(lista)):
+            if lista[j] > lista[i]:
+                aux = posicion[j]
+                posicion[j] = posicion[i]
+                posicion[i] = aux
+
+    return lista

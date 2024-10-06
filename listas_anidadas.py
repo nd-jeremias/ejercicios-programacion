@@ -3,14 +3,15 @@
  """
 #2
 import time
+#from Menu_listas_anidadas.gondola import Gondola
 from Menu_listas_anidadas.opciones import *
 
-import_flag = True
+import_flag = False
 
 while 1:
     opcion = menu()
     if opcion == 1:
-        if opcion_uno():
+        if opcion_uno(Gondola):
             import_flag = True
             print('''
                 *******************************
@@ -19,22 +20,26 @@ while 1:
                 |                             |
                 *******************************
                 ''')
-            input("Presione enter para continuar.")
+            time.sleep(1.5)
     elif opcion == 2:
         if import_flag:
-            opcion_dos()
+            opcion_dos(Gondola)
         else:
             error_alta()
-            """ Pedir nombre del producto, o ubicacion y chequear en la matriz si existe, borrarlo y sino avisar """
-        input("Presione enter para volver al menu.")
-        pass
     elif opcion == 3:
-        """ Lo mismo que el anterior pero pide los datos a modificar
-        crear una funcion de busqueda de producto"""
-        pass
+        if import_flag:
+            opcion_tres(Gondola)
+        else:
+            error_alta()
     elif opcion == 4:
-        pass
+        if import_flag:
+            opcion_cuatro(Gondola)
+        else:
+            error_alta()
     elif opcion == 5:
-        pass
+        if import_flag:
+            opcion_cinco(Gondola)
+        else:
+            error_alta()
     elif opcion == 6:
         break

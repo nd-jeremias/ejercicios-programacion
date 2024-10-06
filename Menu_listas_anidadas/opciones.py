@@ -1,74 +1,87 @@
 from os import system
-from Package_Input.Validate import validate_range
 from Menu_listas_anidadas.utilidades import *
 
 def menu() -> int:
     system("cls")
-    opcion = int(input('''
+    opcion = get_int('''
         1 - Alta de productos (producto nuevo)
         2 - Baja de productos (producto existente)
         3 - Modificar productos (cantidad, ubicación)
         4 - Listar productos
         5 - Lista de productos ordenado por nombre
         6 - Salir
-        '''))
-    if validate_range(opcion, 1, 6):
-        retorno = opcion
-    else:
-        retorno = menu()
+        
+        Seleccione una opcion de la lista:''',
+        "Opcion fuera de rango. Intente nuevamente", 1, 6, -1)
+    return opcion
 
-    return retorno
-
-def opcion_uno() -> bool:
+def opcion_uno(matriz:list) -> bool:
+    
     retorno = False
     producto = pedir_producto()
     if producto:
         imprimir_producto(producto)
         submit = input("Esta informacion es correcta? si / no ").lower()
-        while submit != "si":
-            producto = pedir_producto()
-            imprimir_producto(producto)
-            submit = input("Esta informacion es correcta? si / no ").lower()
-        print(Gondola)
-        alta_producto(producto)
-        print(Gondola)
-        retorno = True
+        if submit == "si":
+            alta_producto(matriz, producto)
+            retorno = True
+        else:
+            input("Proceso cancelado por el usuario - Presione enter para volver al menu ")
     return retorno
 
-def opcion_dos():
+def opcion_dos(matriz):
     
-    opcion = int(input(""" 
+    opcion = get_int(""" 
         Va a dar de baja un producto.
         Seleccione el metodo:
+        
                             1. Nombre
                             2. Ubicacion
-                            """))
-    while validate_range(opcion,1,2) == False:
-        opcion = int(input(""" 
-        Va a dar de baja un producto.
-        Seleccione el metodo:
-                            1. Nombre
-                            2. Ubicacion
-                            """))
+                            """,
+        "Debe seleccionar una opcion de la lista. ", 1, 2, 3)
     if opcion == 1:
-        nombre = input("Ingrese el nombre del producto. ").capitalize()
-        index = buscar_producto_nombre(nombre)
-        imprimir_producto(Gondola[index[0]][index[1]])
-        submit = input("Va a eliminar el siguiente producto. Esta seguro si / no ").lower()
-        while submit != "si":
-            nombre = input("Ingrese el nombre del producto. ").capitalize()
-            index = buscar_producto_nombre(nombre)
-            imprimir_producto(Gondola[index[0]][index[1]])
-            submit = input("Va a eliminar el siguiente producto. Esta seguro si / no ").lower()
-        eliminar_producto(Gondola[index[0]][index[1]])
+        baja_nombre(matriz)
+    elif opcion == 2:
+        baja_ubicacion(matriz)
     else:
-        pass
+        input("Se excedio el maximo de intentos permitidos")
 
-def opcion_tres():
-    pass
+def opcion_tres(matriz:list):
+    
+    opcion = get_int(""" 
+        Va a modificar un producto.
+        Seleccione lo que desea modificar:
+        
+                            1. Cantidad
+                            2. Ubicacion
+                            """,
+        "Debe seleccionar una opcion de la lista. ", 1, 2, 3)
+    if opcion == 1:
+        mod_cantidad(matriz)
+    elif opcion == 2:
+        mod_ubicacion(matriz)
+    else:
+        input("Se excedio el maximo de intentos permitidos")
 
-def opcion_cuatro():
-    pass
+def opcion_cuatro(matriz):
+    
+    imprimir_cabecera()
+    imprimir_listado(matriz)
+    input("Presione enter para volver al menu. ")
 
-def opcion_cinco():
-    pass
+def opcion_cinco(matriz):
+    
+    lista_ordenada = [[]]
+    for i in range(len(matriz)):
+        for j in range(len(matriz[i])):
+             if matriz[i][j]:
+                 lista_ordenada[0].append(matriz[i][j])
+                 
+    for i in range(len(lista_ordenada[0])-1):
+        for j in range(i+1, len(lista_ordenada[0])):
+            if lista_ordenada[0][j][0] < lista_ordenada[0][i][0]:
+                lista_aux = lista_ordenada[0][j]
+                lista_ordenada[0][j] = lista_ordenada[0][i]
+                lista_ordenada[0][i] = lista_aux
+    
+    opcion_cuatro(lista_ordenada)

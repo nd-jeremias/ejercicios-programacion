@@ -2,5 +2,6 @@
 *.pdf
 
 test.py
+practica_parcial
 
 __pycache__/

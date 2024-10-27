@@ -2,8 +2,8 @@
     
     ''' Ordenamiento de lista metodo: burbuja '''
     
-    for i in range(len(lista_uno)):
-        for j in range(len(lista_uno)-1):
+    for i in range(len(lista_uno)-1):
+        for j in range(i+1, len(lista_uno)):
             if lista_uno[j] > lista_uno[i]:
                 aux = lista_uno[j]
                 lista_uno[j] = lista_uno[i]

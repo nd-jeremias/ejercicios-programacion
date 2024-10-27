@@ -50,7 +50,19 @@ def get_string(mensaje:str, mensaje_error:str, maximo:int, reintentos:int)-> str
     
     return retorno
     
+def get_char(mensaje:str, mensaje_error:str, reintentos:int)-> str | None:
     
+    """ Se le pide al usuario que ingrese una letra.
+    Si ingresa mas, lo vuelve a pedir segun los reintentos
+    Si se exceden devuelve None"""
     
-    
-    
+    retorno = None
+    if reintentos != 0:
+        char = str(input(mensaje))
+        if len(char) == 1:
+            retorno = char
+        else:
+            print(mensaje_error)
+            retorno = get_char(mensaje,mensaje_error, reintentos-1)
+            
+    return retorno

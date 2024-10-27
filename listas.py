@@ -98,12 +98,13 @@ for i in range(len(index)):
     print(f"        {nombres[index[i]]} con {edades[index[i]]}") """
     
 #6
-""" from listas_personas import names
+from listas_personas import names
 
 def mostrar_lista(lista:list) -> None:
     for i in range(0, len(lista), 2):
-        print(f"{i+1}: {lista[i]}       -    {i+2}: {lista[i+1]}")
-
+        posicion = str(i+1)
+        print(f"{posicion.rjust(2)}: {lista[i].ljust(20)}       -    {i+2}: {lista[i+1].ljust(20)}")
+    
 nombres = names
 
-mostrar_lista(nombres) """
+mostrar_lista(nombres)

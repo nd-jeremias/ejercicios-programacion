@@ -84,3 +84,30 @@ print(buscar_indice("jamaica",  "m")) """
     return retorno
 
 print(eliminar_repetidos("jamaica")) """
+
+#5
+""" def eliminar_vocales(cadena:str) -> str:
+    vocales = "aeiou"
+    for e in vocales:
+        cadena = cadena.replace(e,"")
+
+#eliminar_vocales("magisterio") """
+
+#6
+""" def contar_subcadena(cadena:str, subcadena:str) -> str:
+
+    count = 0
+    i = 0
+    for c in cadena:
+        if subcadena[i] == c:
+            i += 1
+        else:
+            i = 0
+        if i == len(subcadena)-1:
+            count += 1
+            i = 0
+    
+    return count
+    
+print(contar_subcadena("El pan del panadero", "pan")) """
+    

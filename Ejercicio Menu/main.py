@@ -28,7 +28,7 @@ while 1:
             input("Presione enter para volver al menu.")
         else:
             falta_listado()
-    elif opcion == 4:
+    elif opcion == 4: #corregir
         if import_flag:
             opcion_cuatro(listado)
             input("Presione enter para volver al menu.")
@@ -40,7 +40,7 @@ while 1:
             input("Presione enter para volver al menu.")
         else:
             falta_listado()
-    elif opcion == 6:
+    elif opcion == 6: #corregir
         if import_flag:
             opcion_seis(listado)
             input("Presione enter para volver al menu.")

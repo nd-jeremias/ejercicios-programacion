@@ -84,9 +84,18 @@ def opcion_ocho(listado) -> None:
             print_partial(listado, posiciones[i])
 
 def opcion_nueve(listado) -> None:
-    lista_filtrada = []
+    
     paises = listado.country
+    nombres = listado.names
     posiciones = filtrar_pais(paises, "Mexico")
     
+    for i in range(len(posiciones)-1):
+        for j in range(i+1, len(posiciones)):
+            if nombres[posiciones[j]] < nombres[posiciones[i]]:
+                aux = posiciones[j]
+                posiciones[j] = posiciones[i]
+                posiciones[i] = aux
+    for posicion in posiciones:
+        print_all(listado, posicion)
 
-    print(ordenar_descendente(lista_filtrada))
+    

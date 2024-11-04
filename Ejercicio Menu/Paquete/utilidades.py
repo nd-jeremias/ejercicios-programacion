@@ -27,25 +27,35 @@ def filtrar_pais(lista:list, pais:str) -> list:
 #             retorno.append(i)
 #     return retorno
 
-def filtrar_edad_menor(lista:list, edad_maxima:int) -> list:
+def filtrar_edad_menor(edades:list) -> list:
     
-    """ Funcion que devuelve las posiciones de las personas dentro del limite de edad. """
+    """ Funcion que devuelve las posiciones de las personas con menor edad. """
     
-    retorno = []
-    for i in range(len(lista)):
-        if lista [i] <= edad_maxima:
-            retorno.append(i)
-    return retorno
+    minimo = int(edades[0])
+    posiciones = [0]
+    for i in range (len(edades)):
+        if edades[i] < minimo:
+            minimo = edades[i]
+            posiciones = [i]
+        elif edades[i] == minimo and i > 0:
+            posiciones.append(i)
+    
+    return posiciones
 
-def filtrar_edad_mayor(lista:list, edad_minima:int) -> list:
+def filtrar_edad_mayor(edades:list,) -> list:
     
-    """ Funcion que devuelve las posiciones de las personas que pasan la edad minima. """
+    """ Funcion que devuelve las posiciones de las personas de mayor edad. """
     
-    retorno = []
-    for i in range(len(lista)):
-        if lista [i] >= edad_minima:
-            retorno.append(i)
-    return retorno
+    maximo = int(edades[0])
+    posiciones = [0]
+    for i in range (len(edades)):
+        if edades[i] > maximo:
+            maximo = edades[i]
+            posiciones = [i]
+        elif edades[i] == maximo and i > 0:
+            posiciones.append(i)
+    
+    return posiciones
 
 def calc_promedio(lista:list, suma = 0) -> float:
     
@@ -90,12 +100,19 @@ def print_partial(listado, posicion):
              ->  Mail:      {listado.mails[posicion]}
             """)
     
-def ordenar_descendente(lista:list, posicion:list) -> list:
-    for i in range(len(lista)-1):
-        for j in range(i+1, len(lista)):
-            if lista[j] > lista[i]:
-                aux = posicion[j]
-                posicion[j] = posicion[i]
-                posicion[i] = aux
+def ordenar_descendente(lista:list, posiciones:list) -> list:
+    for i in range(len(posiciones)-1):
+        for j in range(i+1, len(posiciones)):
+            if lista[posiciones[j]] > lista[posiciones[i]]:
+                aux = posiciones[j]
+                posiciones[j] = posiciones[i]
+                posiciones[i] = aux
+                
 
-    return lista
+def ordenar_asc(posiciones:list, lista:list) -> None:
+    for i in range(len(posiciones)-1):
+        for j in range(i+1, len(posiciones)):
+            if lista[posiciones[j]] < lista[posiciones[i]]:
+                aux = posiciones[j]
+                posiciones[j] = posiciones[i]
+                posiciones[i] = aux

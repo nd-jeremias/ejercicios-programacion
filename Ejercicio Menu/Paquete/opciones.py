@@ -15,8 +15,10 @@ def menu() -> int:
          07 - Listar los datos de los usuarios de México y Brasil cuyo código postal sea mayor a 8000 
          08 - Listar nombre, mail y teléfono de los usuarios italianos mayores a 40 años
          09 - Listar los datos de los usuarios de México ordenados por nombre 
-         10 - Listar los datos del/los usuario/s más joven/es ordenados por edad de manera ascendente (Si la edad se repite, ordenar por nombre de manera ascendente) 
-         11 - Listar los datos de los usuarios de México y Brasil cuyo código postal sea mayor a 8000 ordenado por nombre y edad de manera descendente
+         10 - Listar los datos del/los usuario/s más joven/es ordenados por edad de manera ascendente
+                (Si la edad se repite, ordenar por nombre de manera ascendente) 
+         11 - Listar los datos de los usuarios de México y Brasil cuyo código postal sea mayor a 8000
+            (ordenado por nombre y edad de manera descendente)
           0 - Salir 
           """))
     if validate_range(opcion, 0, 11):
@@ -42,11 +44,11 @@ def opcion_tres(listado) -> None:
         print_partial(listado, posiciones[i])
 
 def opcion_cuatro(listado) -> None:
+    
     edades = listado.ages
-    maximo = calc_promedio(edades)
-    posiciones = filtrar_edad_menor(edades, maximo)
-    for i in range (len(posiciones)):
-        print_all(listado, posiciones[i])
+    posiciones = filtrar_edad_mayor(edades)
+    for p in posiciones:
+        print_all(listado, p)
 
 def opcion_cinco(listado) -> None:
     edades = listado.ages
@@ -59,13 +61,14 @@ def opcion_cinco(listado) -> None:
         ''')
     
 def opcion_seis(listado) -> None:
-    edades = listado.ages
+    edades = []
     paises = listado.country
     posiciones = filtrar_pais(paises, "Brazil")
-    promedio = calc_promedio(edades)
-    for i in range(len(posiciones)):
-        if promedio < edades[posiciones[i]]:
-            print_all(listado, posiciones[i])
+    for p in posiciones:
+        edades.append(listado.ages[p])
+    pos_mayores = filtrar_edad_mayor(edades)
+    for p in pos_mayores:
+        print_all(listado, posiciones[p])
 
 def opcion_siete(listado) -> None:
     paises = listado.country
@@ -88,14 +91,21 @@ def opcion_nueve(listado) -> None:
     paises = listado.country
     nombres = listado.names
     posiciones = filtrar_pais(paises, "Mexico")
-    
-    for i in range(len(posiciones)-1):
-        for j in range(i+1, len(posiciones)):
-            if nombres[posiciones[j]] < nombres[posiciones[i]]:
-                aux = posiciones[j]
-                posiciones[j] = posiciones[i]
-                posiciones[i] = aux
+    ordenar_asc(posiciones, nombres)
     for posicion in posiciones:
         print_all(listado, posicion)
 
-    
+def opcion_diez(listado) -> None:
+    menores = filtrar_edad_menor(listado.ages)
+    ordenar_asc(menores, listado.names)
+    for p in menores:
+        print_all(listado, p)
+
+def opcion_once(listado) -> None:
+    paises = listado.country
+    posiciones = filtrar_pais(paises, "Brazil")
+    posiciones += filtrar_pais(paises, "Mexico")
+    ordenar_descendente(listado.ages, posiciones)
+    ordenar_descendente(listado.names, posiciones)
+    for p in posiciones:
+        print_all(listado, p)

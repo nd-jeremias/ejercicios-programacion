@@ -2,7 +2,6 @@ from Paquete.opciones import *
 import time
 
 import_flag = False
-
 while 1:
     opcion = menu()
     if opcion == 1:
@@ -28,7 +27,7 @@ while 1:
             input("Presione enter para volver al menu.")
         else:
             falta_listado()
-    elif opcion == 4: #corregir
+    elif opcion == 4: 
         if import_flag:
             opcion_cuatro(listado)
             input("Presione enter para volver al menu.")
@@ -40,7 +39,7 @@ while 1:
             input("Presione enter para volver al menu.")
         else:
             falta_listado()
-    elif opcion == 6: #corregir
+    elif opcion == 6:
         if import_flag:
             opcion_seis(listado)
             input("Presione enter para volver al menu.")
@@ -61,6 +60,18 @@ while 1:
     elif opcion == 9:
         if import_flag:
             opcion_nueve(listado)
+            input("Presione enter para volver al menu.")
+        else:
+            falta_listado()
+    elif opcion == 10:
+        if import_flag:
+            opcion_diez(listado)
+            input("Presione enter para volver al menu.")
+        else:
+            falta_listado()
+    elif opcion == 11:
+        if import_flag:
+            opcion_once(listado)
             input("Presione enter para volver al menu.")
         else:
             falta_listado()

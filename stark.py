@@ -9,12 +9,12 @@ while 1:
     elif opcion == "3":
         opcion_tres()
     elif opcion == "4":
-        pass
+        opcion_cuatro()
     elif opcion == "5":
         opcion_cinco()
     elif opcion == "6":
-        pass
+        opcion_seis()
     elif opcion == "7":
-        pass
+        opcion_siete()
     elif opcion == "0":
         pass

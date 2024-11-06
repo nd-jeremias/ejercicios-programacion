@@ -23,3 +23,17 @@ def validate_lenght(longitud:int, maximo:int) -> bool:
         retorno = False
         
     return retorno
+
+def isfloat(cadena:str) -> bool:
+    """ Recibe una cadena y evalua caracter por caracter
+    Si encuentra una letra devuelve False.
+    Si encuentra solamente numeros y un solo punto devuelve True """
+    retorno = True
+    if cadena.count(".") == 1:
+        for char in cadena:
+            if not char.isdigit() and char != ".":
+                retorno = False
+    else:
+        retorno = False
+
+    return retorno

@@ -16,5 +16,9 @@ while 1:
         opcion_seis()
     elif opcion == "7":
         opcion_siete()
-    elif opcion == "0":
-        pass
+    elif opcion == "8":
+        print("Hasta luego!")
+        break
+    else:
+        print("Opcion fuera de rango")
+    input("Presione enter para continuar.")

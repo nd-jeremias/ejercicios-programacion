@@ -2,10 +2,12 @@ from package_stark.utilidades import *
 from package_stark.data_stark import lista_personajes
 
 from copy import deepcopy
+from os import system
 
 heroes = deepcopy(lista_personajes)
 
 def menu() -> str:
+    system("cls")
     opcion = input('''
             1. Listar ordenado por Nombre.
             2. Listar Masculinos débiles.
@@ -13,19 +15,25 @@ def menu() -> str:
             4. Listar por color de Pelo.
             5. Listar inteligencia.
             6. Listar Promedio.
-            7. Asignar IMC. IMC = peso (kg)/ [estatura (m)]^2  Calcular el índice de masa corporal de cada superhéroe y guardarla en un nuevo campo.  Se deberá hacer uso de una función lambda que asignará a cada superhéroe el  IMC calculado. 
+            7. Asignar IMC.
+            8. Salir
             Ingrese una opcion: ''')
+            
     return opcion
 
 def opcion_uno() -> None:
 
-    ordenar_asc(heroes, "nombre")
+    ordenar(heroes, "nombre")
     print_all(heroes)
 
 def opcion_dos() -> None:
-    lista_filtrada = filtrar(heroes, "genero", "M")
-    ordenar_asc(lista_filtrada, "fuerza")
-    print_one(lista_filtrada[0])
+    lista_filtrada = obtener_min_max(heroes, "fuerza", -1)
+    ordenar(lista_filtrada, "fuerza")
+    print(f'''
+        |-------------------------------------------------|
+        |    {'Los personajes con menos fuerza son:'.center(44)} |
+        |-------------------------------------------------|''')
+    print_all(lista_filtrada)
 
 def opcion_tres() -> None:
     lista_color_ojos = obtener_datos(heroes,"color_ojos")
@@ -34,8 +42,12 @@ def opcion_tres() -> None:
         for h in heroes:
             cant = cant + 1 if h["color_ojos"] == o else cant
         print(f'''
-              Hay {cant} superheroes con color de ojos {o}
-              ''')
+        |--------------------------------------------------------------|
+        
+            Hay {cant} superheroes 
+            con color de ojos {o}   ''')
+    print(f'''
+        |--------------------------------------------------------------|''')
 
 def opcion_cuatro() -> None:
     lista_color_pelo = obtener_datos(heroes,"color_pelo")
@@ -59,7 +71,7 @@ def opcion_seis() -> None:
             print(f'''
         |-------------------------------------------------|      
         |    {"Nombre:".ljust(14)} {h["nombre"].ljust(30)}|
-        |    {"Peso:".ljust(14)} {str(h["peso"]).ljust(30)}|
+        |    {"Peso:".ljust(14)} {str("%.2f" %float(h["peso"])).ljust(30)}|
         |-------------------------------------------------|''')
 
 def opcion_siete() -> None:

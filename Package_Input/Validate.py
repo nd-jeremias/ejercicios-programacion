@@ -37,3 +37,9 @@ def isfloat(cadena:str) -> bool:
         retorno = False
 
     return retorno
+
+def isnumber(number:str) -> bool:
+    retorno = False
+    if isfloat(number): retorno = True 
+    if number.isdigit(): retorno = True
+    return retorno

@@ -5,6 +5,7 @@ from copy import deepcopy
 from os import system
 
 heroes = deepcopy(lista_personajes)
+imc_flag = False
 
 def menu() -> str:
     system("cls")
@@ -24,16 +25,16 @@ def menu() -> str:
 def opcion_uno() -> None:
 
     ordenar(heroes, "nombre")
-    print_all(heroes)
+    print_all(heroes, imc_flag)
 
 def opcion_dos() -> None:
     lista_filtrada = obtener_min_max(heroes, "fuerza", -1)
     ordenar(lista_filtrada, "fuerza")
     print(f'''
         |-------------------------------------------------|
-        |    {'Los personajes con menos fuerza son:'.center(44)} |
+        |    {'Los masculinos con menos fuerza son:'.center(44)} |
         |-------------------------------------------------|''')
-    print_all(lista_filtrada)
+    print_all(lista_filtrada, imc_flag)
 
 def opcion_tres() -> None:
     lista_color_ojos = obtener_datos(heroes,"color_ojos")
@@ -53,15 +54,17 @@ def opcion_cuatro() -> None:
     lista_color_pelo = obtener_datos(heroes,"color_pelo")
     for e in lista_color_pelo:
         lista_filtrada = filtrar(heroes, "color_pelo", e)
-        print(f"Color de pelo: {e}")
-        print_all(lista_filtrada)
+        print(f'''
+              
+            Color de pelo: {e}''')
+        print_all(lista_filtrada, imc_flag)
         
 def opcion_cinco() -> None:
     tipo_inteligencia = obtener_datos(heroes,"inteligencia")
     for e in tipo_inteligencia:
         lista_filtrada = filtrar(heroes, "inteligencia", e)
         print(f"Inteligencia: {e}")
-        print_all(lista_filtrada)
+        print_all(lista_filtrada, imc_flag)
 
 def opcion_seis() -> None:
     mujeres = filtrar(heroes, "genero", "F")
@@ -75,7 +78,10 @@ def opcion_seis() -> None:
         |-------------------------------------------------|''')
 
 def opcion_siete() -> None:
+    global imc_flag
+    imc_flag = True
+    print_header(imc_flag)
     for h in heroes:
-        imc = calcular_imc(float(h["peso"]),convertir_cm_a_m(float(h["altura"])))
-        h["imc"] = imc
+        imc = calcular_imc(float(h["peso"]), convertir_cm_a_m(float(h["altura"])))
+        h["IMC"] = str("%.2f" %imc)
         print_one(h)

@@ -43,23 +43,28 @@ def obtener_min_max(lista:list, atributo:str, opcion=1) -> list:
                 print("La opcion de busqueda es incorrecta")
     else:
         print("La lista no posee numeros a evaluar en esa posicion")
-                
+   
     return lista_filtrada
-
-def print_one(elemento:dict):
-    """ Imprime un superheroe """
+def print_header(imc_flag):
+    
+    """ Imprime cabecera """
+    
     print(f'''
-        |-------------------------------------------------|
-        |    {"Nombre:".ljust(14)} {elemento["nombre"].ljust(30)}|
-        |    {"Identidad:".ljust(14)} {elemento["identidad"].ljust(30)}|
-        |    {"Altura:".ljust(14)} {str("%.2f" %float(elemento["altura"])).ljust(30)}|
-        |    {"Peso:".ljust(14)} {str("%.2f" %float(elemento["peso"])).ljust(30)}|
-        |    {"Fuerza:".ljust(14)} {elemento["fuerza"].ljust(30)}|
-        |    {"Inteligencia:".ljust(14)} {elemento["inteligencia"].ljust(30)}|
-        |-------------------------------------------------|''')
+        |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|{"-----------|" if imc_flag == True else ""}
+        | {"Nombre:".ljust(32)}| {"Identidad:".ljust(32)}| {"Empresa:".ljust(32)}| {"Altura:".ljust(10)}| {"Peso:".ljust(10)}|{"Genero:".center(10)}| {"Ojos:".ljust(25)}| {"Pelo:".ljust(20)}| {"Fuerza:".ljust(10)}| {"Inteligencia:".ljust(20)}| {"IMC".ljust(10) if imc_flag == True else ""}{"|" if imc_flag == True else ""}
+        |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|{"-----------|" if imc_flag == True else ""}''',end="")
+    
+def print_one(elemento:dict):
+    
+    """ Imprime un superheroe """
+    
+    print(f'''
+        | {elemento["nombre"].ljust(32)}| {elemento["identidad"].ljust(32)}| {elemento["empresa"].ljust(32)}|{str("%.2f" %float(elemento["altura"])).rjust(10)} |{str("%.2f" %float(elemento["peso"])).rjust(10)} |{elemento["genero"].center(10)}| {elemento["color_ojos"].ljust(25)}| {elemento["color_pelo"].ljust(20)}|{elemento["fuerza"].rjust(10)} | {elemento["inteligencia"].ljust(20)}|{elemento["IMC"].rjust(10) if "IMC" in elemento else ""} {"|" if "IMC" in elemento else ""}
+        |---------------------------------|---------------------------------|---------------------------------|-----------|-----------|----------|--------------------------|---------------------|-----------|---------------------|{"-----------|" if "IMC" in elemento else ""}''',end="")
 
-def print_all(lista:list) -> None:
+def print_all(lista:list, imc_flag) -> None:
     """ Imprime todos los superheroes de la lista """
+    print_header(imc_flag)
     for e in lista:
         print_one(e)
         
@@ -98,7 +103,7 @@ def calcular_imc(peso:float,altura:float) -> float:
     return imc
 
 def convertir_cm_a_m(distancia:float) -> float:
-    retorno = distancia * 100
+    retorno = distancia / 100
     return retorno
 
 ################### MODIFICAR USANDO METODOS STRING#############

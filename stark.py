@@ -21,4 +21,4 @@ while 1:
         break
     else:
         print("Opcion fuera de rango")
-    input("Presione enter para continuar.")
+    input("\nPresione enter para continuar.")

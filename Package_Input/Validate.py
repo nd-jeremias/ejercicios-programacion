@@ -43,3 +43,24 @@ def isnumber(number:str) -> bool:
     if isfloat(number): retorno = True 
     if number.isdigit(): retorno = True
     return retorno
+
+def swap(lista:list, i:int, j:int) -> None:
+    
+    """ Realiza un swap en la lista recibida """
+    
+    aux = lista[j]
+    lista[j] = lista[i]
+    lista[i] = aux
+
+def ordenar(lista:list, atributo:str, orden=1) -> None:
+    
+    """ Ordena la lista recibida segun el orden definido.
+    Si recibe 1 ordena ascendente. Forma predeterminada
+    Con -1 se ordena de forma descendente"""
+    
+    for i in range(len(lista)-1):
+        for j in range(i+1,len(lista)):
+            if orden == 1 and lista[j][atributo] < lista[i][atributo]:
+                swap(lista, i, j)
+            elif orden == -1 and lista[j][atributo] > lista[i][atributo]:
+                swap(lista, i, j)

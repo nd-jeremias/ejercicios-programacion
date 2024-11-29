@@ -29,7 +29,7 @@ running = True
 ########Funciones
 
 # Armar cuadrícula
-def make_grid():
+def make_grid() -> list:
     grid = []
     for r in range(ROW):
         fila = []
@@ -42,7 +42,7 @@ def make_grid():
     return grid
 
 # Armar matriz aleatoria
-def make_matrix():
+def make_matrix() -> list:
     matrix = []
     for r in range(ROW):
         row = []
@@ -70,7 +70,8 @@ def check(matriz:list, posicion:list, dir=1, check=0) -> bool:
         retorno = True
     return retorno
 
-def draw_grid(grid:list,matrix:list):
+# Dibujar grilla donde colocar las grageas
+def draw_grid(grid:list,matrix:list) -> None:
     for i in range(len(grid)):
         for j in range(len(grid[i])):
             pygame.draw.rect(screen, COLOR_LINEA, grid[i][j], 1)
@@ -78,26 +79,36 @@ def draw_grid(grid:list,matrix:list):
             if matrix[i][j] == 2: screen.blit(dragee_blue,grid[i][j])
             if matrix[i][j] == 3: screen.blit(dragee_green,grid[i][j])
 
+def draw_button():
+    pygame.draw.rect(screen,(180,50,50), (290, 20, 700, 100), 0, 10)
+    screen.blit(miTexto,(500,40))
+    
+
+
 #####Variables
 
 grid_list = make_grid()
 validate = False
 points = 0
 
+miFuente = pygame.font.Font(None, 30)
+button_text = "Puntos acumulados" + str(points) # Guardar en variable para llamar dentro del while
+miTexto = miFuente.render(button_text, 0, (80, 60, 200))
+
 # matrix_flag se utiliza para generar la matriz aleatoria, paralela a la grilla. Cuando se hace click en una gragea se vuelve a generar una nueva
 matrix_flag = True
 
 while running:
-     
-    # Se verifica si el usuario cerro la ventana
+    
+    # Verificador de eventos
     for event in pygame.event.get():
         
-        # Evento que cierra el programa
+        # Se verifica si el usuario cerro la ventana
         if event.type == pygame.QUIT:
             running = False
         
         # Obtengo la posicion del mouse y verifico que colisione con la dragee
-        if event.type == pygame.MOUSEBUTTONDOWN :
+        if event.type == pygame.MOUSEBUTTONDOWN:
             pos = event.pos
             for i in range(len(grid_list)):
                 for j in range(len(grid_list[i])):
@@ -113,6 +124,7 @@ while running:
                             print("SE GANO 10 PUNTOS")
                             points += 10
                             validate = False
+                            miTexto = miFuente.render(str(points), 0, (80, 60, 200))
                         else:
                             print("VUELVA A INTENTARLO")
         
@@ -120,7 +132,7 @@ while running:
                         #print(f"fila:  {i} columna: {j} Objeto: ")#BORRAR
                         #print(f"{cell}")#BORRAR
 
-        
+
     if matrix_flag:
         matrix = make_matrix()
         matrix_flag = False
@@ -132,6 +144,11 @@ while running:
 
     # Dibujar grilla
     draw_grid(grid_list, matrix)
+    
+    
+    draw_button()
+    # Recuadro para mostrar puntos acumulados?
+    #pygame.draw.rect(screen,(180,50,50), (290, 20, 700, 100), 0, 10)
     
     # Actualiza la pantalla
     pygame.display.flip()

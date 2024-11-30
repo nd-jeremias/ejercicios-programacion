@@ -1,5 +1,6 @@
 from random import randint
 from colorama import Fore
+import datetime as dt
 
 def generar_matriz(lista:list, cant_col) -> list:
     
@@ -89,7 +90,24 @@ def print_header():
     """ Imprime cabecera """
     
     print(f'''
-        |-------------------------------------------------------------------|
-        | {"Posicion:".ljust(10)}| {"Nombre:".ljust(20)}| {"Apellido:".ljust(20)}| {"Puntos:".ljust(10)}|
-        |-------------------------------------------------------------------|
-    ''')
+        |--------------------------------------------------------------|
+        | {"Usuario:".ljust(20)}| {"Puntos:".ljust(10)}| {"Fecha:".ljust(27)}|
+        |--------------------------------------------------------------|''')
+
+def print_user(user, points, date):
+    print(f'''
+        |--------------------------------------------------------------|
+        | {user.ljust(20)}| {points.center(10)}| {date.ljust(27)}|
+        |--------------------------------------------------------------|''')
+    
+def print_leaderboard(leaderboard:list):
+    
+    print_header()
+    for e in leaderboard:
+        data = e.split(";")
+        print_user(data[0], data[1], data[2].replace("\n", ""))
+        
+def get_time():
+    time_now = (dt.datetime.now())
+    time = str(time_now.year) + "-" + str(time_now.month) + "-" + str(time_now.day) + " " + str(time_now.hour) + ":" +  str(time_now.minute)
+    return time

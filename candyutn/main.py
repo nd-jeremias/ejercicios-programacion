@@ -1,154 +1,119 @@
-from random import randint #BORRAR Y MOVER AL OTRO PAQUETE
 import pygame
-from constantes import *
-# Icono: pygame.display.set_icon(icono) (donde ícono es una superficie de Pygame)
-# Modo a pantalla completa: pygame.display.set_mode((800, 600), pygame.FULLSCREEN)
-# Ventana redimensionable: pygame.display.set_mode((800, 600), pygame.RESIZABLE)
+from package.constants import *
+from package.functions import *
+from package.initializers import *
+from package.colores import GREEN1, WHITESMOKE
+from os import system
 
-# Título:
-pygame.display.set_caption("Candy-UTN")
-# Inicializacion:
+system("cls") # Limpia la pantalla
+
+# Inicializacion de pygame:
 pygame.init()
 
-# Seteo de pantalla:
-screen = pygame.display.set_mode([SCREEN_W, SCREEN_H])
-# Obtengo el fondo
-fondo = pygame.image.load(IMG_LOC)
-# Escalo la imagen recibida
+# Escalar imagenes:
 fondo = pygame.transform.scale(fondo,(SCREEN_W, SCREEN_H))
-# Obtengo las grageas y las escalo:
-dragee_red = pygame.image.load("./candyutn/dragee_red.png")
-dragee_red = pygame.transform.scale(dragee_red,(TAM_CELDA,TAM_CELDA))
-dragee_blue = pygame.image.load("./candyutn/dragee_blue.png")
-dragee_blue = pygame.transform.scale(dragee_blue,(TAM_CELDA,TAM_CELDA))
-dragee_green = pygame.image.load("./candyutn/dragee_green.png")
-dragee_green = pygame.transform.scale(dragee_green,(TAM_CELDA,TAM_CELDA))
-# Seteo juego corriendo
-running = True
+dragee_red = pygame.transform.scale(dragee_red,(CELL_SIZE,CELL_SIZE))
+dragee_blue = pygame.transform.scale(dragee_blue,(CELL_SIZE,CELL_SIZE))
+dragee_green = pygame.transform.scale(dragee_green,(CELL_SIZE,CELL_SIZE))
+get_results_btn = pygame.transform.scale(get_results_btn,BUTTON_SIZE)
 
-########Funciones
+leaderboard = pygame.image.load("./candyutn/img/leaderboard.png")
+leaderboard = pygame.transform.scale(leaderboard,LEADERBOARD_SIZE)
 
-# Armar cuadrícula
-def make_grid() -> list:
-    grid = []
-    for r in range(ROW):
-        fila = []
-        for c in range(COL):
-            y = r * TAM_CELDA
-            x = c * TAM_CELDA
-            cell = pygame.Rect(x+ORIGEN_X, y+ORIGEN_Y, TAM_CELDA, TAM_CELDA)
-            fila.append(cell)
-        grid.append(fila)
-    return grid
-
-# Armar matriz aleatoria
-def make_matrix() -> list:
-    matrix = []
-    for r in range(ROW):
-        row = []
-        for c in range(COL):
-            row.append(randint(1,3))
-        matrix.append(row)
-    return matrix
-
-# Verificar posiciones
-def check(matriz:list, posicion:list, dir=1, check=0) -> bool:
-    
-    """ Verifica que haya 3 numeros iguales, consecutivos de forma vertical.
-    dir=1 verifica hacia "abajo"(aumenta las posicion en filas)
-    dir=-1 verifica hacia "arriba"(disminuye las posicion en filas)"""
-    
-    retorno = False
-    for i in range(1,3):
-        if dir == 1:
-            new_pos = posicion[0] + i
-        elif dir == -1:
-            new_pos = posicion[0] - i
-        if matriz[posicion[0]][posicion[1]] == matriz[new_pos][posicion[1]]:
-            check += 1
-    if check == 2:
-        retorno = True
-    return retorno
-
-# Dibujar grilla donde colocar las grageas
-def draw_grid(grid:list,matrix:list) -> None:
-    for i in range(len(grid)):
-        for j in range(len(grid[i])):
-            pygame.draw.rect(screen, COLOR_LINEA, grid[i][j], 1)
-            if matrix[i][j] == 1: screen.blit(dragee_red,grid[i][j])
-            if matrix[i][j] == 2: screen.blit(dragee_blue,grid[i][j])
-            if matrix[i][j] == 3: screen.blit(dragee_green,grid[i][j])
-
-def draw_button():
-    pygame.draw.rect(screen,(180,50,50), (290, 20, 700, 100), 0, 10)
-    screen.blit(miTexto,(500,40))
-    
-
-
-#####Variables
-
-grid_list = make_grid()
-validate = False
-points = 0
-
-miFuente = pygame.font.Font(None, 30)
-button_text = "Puntos acumulados" + str(points) # Guardar en variable para llamar dentro del while
-miTexto = miFuente.render(button_text, 0, (80, 60, 200))
-
-# matrix_flag se utiliza para generar la matriz aleatoria, paralela a la grilla. Cuando se hace click en una gragea se vuelve a generar una nueva
-matrix_flag = True
+# Fuente
+# font = pygame.font.Font(FONT_LOC, 30)
+# text = font.render(user, 1, WHITESMOKE)
 
 while running:
-    
+
     # Verificador de eventos
     for event in pygame.event.get():
-        
+
         # Se verifica si el usuario cerro la ventana
         if event.type == pygame.QUIT:
             running = False
         
-        # Obtengo la posicion del mouse y verifico que colisione con la dragee
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            pos = event.pos
-            for i in range(len(grid_list)):
-                for j in range(len(grid_list[i])):
-                    if grid_list[i][j].collidepoint(pos[0], pos[1]):
-                        #ACA EJECUTAR VERIFICACION
-                        
-                        if i < 2:
-                            validate = (check(matrix,[i,j]))
-                        elif i >= 2:
-                            validate = (check(matrix,[i,j], -1))
-                        
-                        if validate:
-                            print("SE GANO 10 PUNTOS")
-                            points += 10
-                            validate = False
-                            miTexto = miFuente.render(str(points), 0, (80, 60, 200))
-                        else:
-                            print("VUELVA A INTENTARLO")
+        # Se verifica si fue pulsado el boton restart
+        if leaderboard_show:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if rect_restart_btn.collidepoint(event.pos):
+                    print("RESTART")
+                    leaderboard_show = False
+                    user_input = True
         
-                        matrix_flag = True
-                        #print(f"fila:  {i} columna: {j} Objeto: ")#BORRAR
-                        #print(f"{cell}")#BORRAR
+        # Ingreso de username
+        if user_input: # Se verifica si ya se ingreso el usuario
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = event.pos
+                for i in range(len(keyboard_grid)):
+                        for j in range(len(keyboard_grid[i])):
+                            if keyboard_grid[i][j].collidepoint(pos[0], pos[1]):
+                                if LATIN_KEYBOARD[i][j] != "-":
+                                    user += (LATIN_KEYBOARD[i][j])
+                                print(user)#BORRAR
+            
+            # Verifica boton submit
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if rect_submit_btn.collidepoint(event.pos):
+                    print("SUBMIT")
+                    user_input = False
+                    game = True
+                        
+        #Obtengo la posicion del mouse y verifico que colisione con la gragea
+        if game:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = event.pos
+                for i in range(len(dragee_grid)):
+                    for j in range(len(dragee_grid[i])):
+                        if dragee_grid[i][j].collidepoint(pos[0], pos[1]):
 
+                            if i < 2:
+                                validate = (check(matrix,[i,j]))
+                            elif i >= 2:
+                                validate = (check(matrix,[i,j], -1))
 
-    if matrix_flag:
-        matrix = make_matrix()
-        matrix_flag = False
+                            if validate:
+                                print("SE GANO 10 PUNTOS")
+                                points += 10
+                                validate = False
+                                #miTexto = miFuente.render(str(points), 0, (80, 60, 200))
+                            else:
+                                print("VUELVA A INTENTARLO")
+                            matrix = make_matrix(ROW,COL)
+#VERIFICAR POR QUE ACCIONAN LOS DOS BOTONES A LA VEZ
+asde
+            # Se verifica si fue pulsado el boton leaderboard
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if rect_get_results_btn.collidepoint(event.pos):
+                    print("LEADERBOARD")
+                    leaderboard_show = True
+                    game = False
+                    
 
     # Se pinta el fondo de la ventana:
-    screen.fill((255, 60, 255))
+    screen.fill(GREEN1)
     # Se carga la imagen de fondo:
     screen.blit(fondo, (0,0))
-
-    # Dibujar grilla
-    draw_grid(grid_list, matrix)
     
-    
-    draw_button()
-    # Recuadro para mostrar puntos acumulados?
-    #pygame.draw.rect(screen,(180,50,50), (290, 20, 700, 100), 0, 10)
+    if user_input:
+        
+        screen.blit(submit_btn, rect_submit_btn)
+        # Dibujar teclado
+        draw_keyboard(screen,keyboard_grid,keyboard)
+        
+    if game:    
+        
+        # Dibujar grilla
+        draw_grid(screen, dragee_grid, matrix, dragee_list)
+        # Dibujar boton para ver leaderboard
+        screen.blit(get_results_btn, rect_get_results_btn)
+        
+    if leaderboard_show:
+        
+        screen.blit(fondo, (0,0)) #ESTO PISA LA GRILLA ANTERIOR
+        screen.blit(leaderboard,LEADERBOARD_POS)
+        # Dibujar boton para volver a empezar
+        screen.blit(restart_btn, rect_restart_btn)
     
     # Actualiza la pantalla
     pygame.display.flip()

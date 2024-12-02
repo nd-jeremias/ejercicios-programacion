@@ -13,37 +13,40 @@ GET_RESULTS_LOC = "./candyutn/img/get_results_btn.png"
 RESTART_BTN_LOC = "./candyutn/img/restart_btn.png"
 FONT_LOC = "./candyutn/font/candy_crush.ttf"
 LEADERBOARD_LOC = "./candyutn/img/leaderboard.png"
+ARCHIVE_LOC = "./candyutn/save/leaderboard.csv"
 
-ARCHIVE_LOC = './candyutn/save/leaderboard.csv'
+# Fuente
+FONT_SIZE = 30
 
 # Celdas
 COL = 7
 ROW = 4
 CELL_SIZE = 100
 
+ORIGEN_X = (SCREEN_W - (CELL_SIZE * COL)) / 2
+ORIGEN_Y = (SCREEN_H - (CELL_SIZE * ROW)) / 2
+
 # Cartel de puntos
 LEADERBOARD_SIZE = (375, 600)
 LEADERBOARD_POS = (450, 30)
 
+ADD_POINTS = 10
+
 # Botones
-BUTTON_SIZE = (153, 47)
-BUTTON_POS = (563, 630)
+BUTTON_SIZE = (154, 48)
+BUTTON_POS = (562, 630)
 
-COLOR_LINEA = GRAY79 # BORRAR SI NO SE USA
-COLOR_HOVER = (150, 230, 255)
+# Usuario
+USER_NAME_SIZE = 10
+USER_INIT_POS = (520,144)
 
-ORIGEN_X = (SCREEN_W - (CELL_SIZE * COL)) / 2
-ORIGEN_Y = (SCREEN_H - (CELL_SIZE * ROW)) / 2
-
+# Teclado
 K_COL = 10
 K_ROW = 3
 ORIGEN_KX = (SCREEN_W - (CELL_SIZE * K_COL)) / 2
 ORIGEN_KY = (SCREEN_H - (CELL_SIZE * K_ROW)) / 2
 
-USER_INIT_POS = (520,144)
-
 LATIN_KEYBOARD = [
         ["Q","W","E","R","T","Y","U","I","O","P"],
         ["A","S","D","F","G","H","J","K","L","Ñ"],
         ["-","Z","X","C","V","B","N","M","ENTER", "-"]]
-

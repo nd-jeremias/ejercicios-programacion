@@ -2,13 +2,14 @@ import pygame
 from package.constants import *
 from package.functions import *
 from package.initializers import *
-from package.colores import GREEN1, WHITESMOKE
+from package.colores import GREEN1, ROYALBLUE4
 from os import system
-
-system("cls") # Limpia la pantalla
 
 # Inicializacion de pygame:
 pygame.init()
+
+# Limpia la pantalla
+system("cls")
 
 # Escalar imagenes:
 fondo = pygame.transform.scale(fondo,(SCREEN_W, SCREEN_H))
@@ -19,12 +20,7 @@ get_results_btn = pygame.transform.scale(get_results_btn,BUTTON_SIZE)
 leaderboard = pygame.transform.scale(leaderboard,LEADERBOARD_SIZE)
 
 # Fuente
-font = pygame.font.Font(FONT_LOC, 30)
-
-
-# Meter en un rectangulo de 282x64
-# Posicion : (196,144)
-
+font = pygame.font.Font(FONT_LOC, FONT_SIZE)
 
 while running:
 
@@ -39,7 +35,6 @@ while running:
         if leaderboard_show:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if rect_restart_btn.collidepoint(event.pos):
-                    print("RESTART") #BORRAR
                     user_name = "" # BORRAR, PASAR POR PARAMETRO AL ARMAR FUNCIONES // 
                     points = 0
                     leaderboard_show = False
@@ -53,8 +48,8 @@ while running:
                         for j in range(len(keyboard_grid[i])):
                             if keyboard_grid[i][j].collidepoint(pos[0], pos[1]):
                                 if LATIN_KEYBOARD[i][j] != "-" and LATIN_KEYBOARD[i][j] != "ENTER":
-                                    # LIMITAR A 10 CARACTERES
-                                    user_name += (LATIN_KEYBOARD[i][j])
+                                    if len(user_name) <= USER_NAME_SIZE:
+                                        user_name += (LATIN_KEYBOARD[i][j])
                                 print(user_name)#BORRAR
             
             # Verifica boton "ENTER"
@@ -78,10 +73,9 @@ while running:
                                 validate = (check(matrix,[i,j], -1))
 
                             if validate:
-                                print("SE GANO 10 PUNTOS")
-                                points += 10
+                                print(f"SE GANO {ADD_POINTS} PUNTOS")
+                                points += ADD_POINTS
                                 validate = False
-                                #miTexto = miFuente.render(str(points), 0, (80, 60, 200))
                             else:
                                 print("VUELVA A INTENTARLO")
                             matrix = make_matrix(ROW,COL)
@@ -93,11 +87,13 @@ while running:
                     leaderboard_show = True
                     game = False
 
-                    # Esto hay q sacarlo, sino se hace infinitas veces. Mover a funcion y utilizar flag?      
-                    user_string = user_name + " - " + str(points) + '\n'
-                    user_data = font.render(user_string, 1, WHITESMOKE)#BORRAR APPENDEAR
-                    user_list.append(user_string)
-
+                    # Creamos un string con los datos de usuario y lo renderizamos
+                    user_string = format_user(user_name, points, user_list)
+                    if len(user_data) <= 6:
+                        user_data.append(font.render(user_string, 1, ROYALBLUE4))
+                    else:
+                        sdasd user_data[0] # ACA HAY Q HACER UN CARRY CON EL ARRAY
+                    
                     # Crea el archivo con los datos de usuario
                     update_userlist_archive(ARCHIVE_LOC, user_list)
 
@@ -124,7 +120,7 @@ while running:
         # Dibujar cartel
         screen.blit(leaderboard,LEADERBOARD_POS)
         # Dibujar posiciones
-        screen.blit(user_data, USER_INIT_POS)# ACA VA UNA FUNCION QUE IMPRIMA LA LISTA
+        print_points(screen, user_data, USER_INIT_POS)
         # Dibujar boton para volver a empezar
         screen.blit(restart_btn, rect_restart_btn)
     

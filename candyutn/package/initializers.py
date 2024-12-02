@@ -56,6 +56,7 @@ points = 0
 # Inicializa el user vacio
 user_name = ""
 user_list = get_userlist_archive(ARCHIVE_LOC)
+user_data = []
 
 # Flag que muestra el leaderboard
 leaderboard_show = False

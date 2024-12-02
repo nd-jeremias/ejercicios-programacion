@@ -44,18 +44,18 @@ def check(matriz:list, posicion:list, dir=1, check=0) -> bool:
     return retorno
 
 # Dibujar las grageas
-def draw_grid(screen, grid:list,matrix:list, dragee_list:list) -> None:
+def draw_grid(surface, grid:list,matrix:list, dragee_list:list) -> None:
     for i in range(len(grid)):
         for j in range(len(grid[i])):
-            if matrix[i][j] == 1: screen.blit(dragee_list[0],grid[i][j])
-            if matrix[i][j] == 2: screen.blit(dragee_list[1],grid[i][j])
-            if matrix[i][j] == 3: screen.blit(dragee_list[2],grid[i][j])
+            if matrix[i][j] == 1: surface.blit(dragee_list[0],grid[i][j])
+            if matrix[i][j] == 2: surface.blit(dragee_list[1],grid[i][j])
+            if matrix[i][j] == 3: surface.blit(dragee_list[2],grid[i][j])
 
 # Dibujar las teclas
-def draw_keyboard(screen, grid:list, keyboard:list) -> None:
+def draw_keyboard(surface, grid:list, keyboard:list) -> None:
     for i in range(len(keyboard)):
         for j in range(len(keyboard[i])):
-            screen.blit(keyboard[i][j],grid[i][j])
+            surface.blit(keyboard[i][j],grid[i][j])
 
 # Obtener lista de usuarios desde archivo
 def get_userlist_archive(archive_loc) -> list:
@@ -88,3 +88,18 @@ def update_userlist_archive(archive_loc, file_list) -> None:
         file.writelines(file_list)
     finally:
         file.close()
+
+def format_user(user_name, points, user_list) -> str:
+    
+    user_string = user_name + " - " + str(points) + '\n'
+    user_list.append(user_string)
+    
+    return user_string
+
+def print_points(surface, user_data, user_init_pos) -> None:
+    keep_pos = user_init_pos[0]
+    new_pos = user_init_pos[1]
+    for user in user_data:
+        surface.blit(user, user_init_pos)
+        new_pos += 65
+        user_init_pos = (keep_pos, new_pos) # 70 al 140(pos[1]) <=es una tupla

@@ -24,22 +24,22 @@ dragee_blue = pygame.image.load(DRAGEE_BLUE_LOC)
 dragee_green = pygame.image.load(DRAGEE_GREEN_LOC)
 
 dragee_list = [dragee_red, dragee_blue, dragee_green]
+# Grilla donde se colocan las grageas
+dragee_grid = make_grid(ROW,COL,CELL_SIZE,ORIGEN_X,ORIGEN_Y)
 
 # Boton leaderboard
 get_results_btn = pygame.image.load(GET_RESULTS_LOC)
-rect_get_results_btn = pygame.Rect(BUTTON_POS, BUTTON_SIZE)
-
-# Boton submit user
-submit_btn = pygame.image.load(SUBMIT_BTN_LOC)
-rect_submit_btn = pygame.Rect(BUTTON_POS, BUTTON_SIZE)
+rect_get_results_btn = pygame.Rect((563, 630), BUTTON_SIZE)
+# Carter leaderboard
+leaderboard = pygame.image.load(LEADERBOARD_LOC)
 
 # Boton restart
 restart_btn = pygame.image.load(RESTART_BTN_LOC)
-rect_restart_btn = pygame.Rect(BUTTON_POS, BUTTON_SIZE)
+rect_restart_btn = pygame.Rect((563, 630), BUTTON_SIZE)
+#(363, 630) #BORRAR
+#(763, 630) #BORRAR
 
-# Grilla donde se colocan las grageas
-dragee_grid = make_grid(ROW,COL,CELL_SIZE,ORIGEN_X,ORIGEN_Y)
-#################TELCADO#################BORRAR
+# Teclado
 key_row = len(keyboard)
 key_col = len(keyboard[0])
 keyboard_grid = make_grid(key_row,key_col,CELL_SIZE,ORIGEN_KX,ORIGEN_KY)
@@ -54,7 +54,8 @@ validate = False
 points = 0
 
 # Inicializa el user vacio
-user = ""
+user_name = ""
+user_list = get_userlist_archive(ARCHIVE_LOC)
 
 # Flag que muestra el leaderboard
 leaderboard_show = False

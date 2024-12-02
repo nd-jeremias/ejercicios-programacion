@@ -10,9 +10,11 @@ DRAGEE_BLUE_LOC = "./candyutn/img/dragee_blue.png"
 DRAGEE_GREEN_LOC = "./candyutn/img/dragee_green.png"
 DRAGEE_RED_LOC = "./candyutn/img/dragee_red.png"
 GET_RESULTS_LOC = "./candyutn/img/get_results_btn.png"
-SUBMIT_BTN_LOC = "./candyutn/img/submit_btn.png"
 RESTART_BTN_LOC = "./candyutn/img/restart_btn.png"
 FONT_LOC = "./candyutn/font/candy_crush.ttf"
+LEADERBOARD_LOC = "./candyutn/img/leaderboard.png"
+
+ARCHIVE_LOC = './candyutn/save/leaderboard.csv'
 
 # Celdas
 COL = 7
@@ -37,6 +39,8 @@ K_COL = 10
 K_ROW = 3
 ORIGEN_KX = (SCREEN_W - (CELL_SIZE * K_COL)) / 2
 ORIGEN_KY = (SCREEN_H - (CELL_SIZE * K_ROW)) / 2
+
+USER_INIT_POS = (520,144)
 
 LATIN_KEYBOARD = [
         ["Q","W","E","R","T","Y","U","I","O","P"],

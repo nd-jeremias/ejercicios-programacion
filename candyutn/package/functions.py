@@ -56,3 +56,35 @@ def draw_keyboard(screen, grid:list, keyboard:list) -> None:
     for i in range(len(keyboard)):
         for j in range(len(keyboard[i])):
             screen.blit(keyboard[i][j],grid[i][j])
+
+# Obtener lista de usuarios desde archivo
+def get_userlist_archive(archive_loc) -> list:
+    
+    """ Lee el archivo de usuarios/puntos y,
+    si existe lo devuelve en forma de lista
+    sino devuelve False """
+    
+    file_list = []
+    try:
+        file = open(archive_loc, 'r')
+    except FileNotFoundError:
+        file_list = []
+        print("No existen partidas guardadas")
+    except:
+        print("Error - No identificado")
+    else:
+        file_list = file.readlines() # Esto lee el archivo como una lista
+        file.close()
+    
+    return file_list
+
+def update_userlist_archive(archive_loc, file_list) -> None:
+    # Creacion del archivo leaderboard
+    try:
+        file = open(archive_loc, 'w')
+    except:
+        print("Error al escribir el archivo")
+    else:
+        file.writelines(file_list)
+    finally:
+        file.close()

@@ -3,68 +3,81 @@ from random import randint
 
 # Armar cuadrícula
 def make_grid(row:int, col:int, cell_size:int, origen_x:int, origen_y:int) -> list:
+    
+    """ Crea una cuadricula de rectangulos """
+    
     grid = []
     for r in range(row):
         fila = []
         for c in range(col):
             y = r * cell_size
             x = c * cell_size
-            cell = pygame.Rect(x+origen_x, y+origen_y, cell_size, cell_size)
+            cell = pygame.Rect(x+origen_x, y+origen_y, cell_size*0.8, cell_size*0.8)
             fila.append(cell)
         grid.append(fila)
     return grid
 
-# Armar matriz aleatoria
-def make_matrix(row:int, col:int) -> list:
-    matrix = []
-    for r in range(row):
-        row = []
-        for c in range(col):
-            row.append(randint(1,3))
-        matrix.append(row)
-    return matrix
+def make_matrix(base_list:list, col:int, attr:str) -> list:
+    
+    """ Genera una matriz de numeros aleatoria entre 1 y 3 """
+    
+    for e in base_list:
+        for i in range(col):
+            e[attr].append(randint(1,3))
+    return base_list
 
-# Verificar posiciones
-def check(matriz:list, posicion:list, dir=1, check=0) -> bool:
+def check(matriz:list, posicion:list, attr:str, origin=1, check=0) -> bool:
     
     """ Verifica que haya 3 numeros iguales, consecutivos de forma vertical.
-    dir=1 verifica hacia "abajo"(aumenta las posicion en filas)
-    dir=-1 verifica hacia "arriba"(disminuye las posicion en filas)"""
+    origin, indica desde donde va verifica
+    hacia "abajo"(aumenta las posicion en filas)
+    hacia "arriba"(disminuye las posicion en filas) """
     
     retorno = False
     for i in range(1,3):
-        if dir == 1:
+        if origin < 2:
             new_pos = posicion[0] + i
-        elif dir == -1:
+        elif origin >= 2:
             new_pos = posicion[0] - i
-        if matriz[posicion[0]][posicion[1]] == matriz[new_pos][posicion[1]]:
+        if matriz[posicion[0]][attr][posicion[1]] == matriz[new_pos][attr][posicion[1]]:
             check += 1
     if check == 2:
         retorno = True
     return retorno
 
-# Dibujar las grageas
-def draw_grid(surface, grid:list,matrix:list, dragee_list:list) -> None:
+def draw_grid(surface, grid:list,matrix:list, attr:str, dragee_list:list) -> None:
+    
+    """ Dibuja las grageas en la grilla establecida """
+    
     for i in range(len(grid)):
         for j in range(len(grid[i])):
-            if matrix[i][j] == 1: surface.blit(dragee_list[0],grid[i][j])
-            if matrix[i][j] == 2: surface.blit(dragee_list[1],grid[i][j])
-            if matrix[i][j] == 3: surface.blit(dragee_list[2],grid[i][j])
+            if matrix[i][attr][j] == 1: surface.blit(dragee_list[0],grid[i][j])
+            if matrix[i][attr][j] == 2: surface.blit(dragee_list[1],grid[i][j])
+            if matrix[i][attr][j] == 3: surface.blit(dragee_list[2],grid[i][j])
 
-# Dibujar las teclas
 def draw_keyboard(surface, grid:list, keyboard:list) -> None:
+    
+    """ Dibuja las teclas en los rect asignados """
+    
     for i in range(len(keyboard)):
         for j in range(len(keyboard[i])):
             surface.blit(keyboard[i][j],grid[i][j])
 
-# Obtener lista de usuarios desde archivo
-def get_userlist_archive(archive_loc) -> list:
+def order_user_list(user_list:list):
+    
+    for i in range(len(user_list)-1):
+        for j in range(i+1, len(user_list)):
+            if user_list[j] < user_list[i]:
+                aux = user_list[j]
+                user_list[j] = user_list[i]
+                user_list[i] = aux
+
+def get_userlist_archive(archive_loc, file_list=[]) -> list:
     
     """ Lee el archivo de usuarios/puntos y,
     si existe lo devuelve en forma de lista
-    sino devuelve False """
+    sino devuelve una lista vacia """
     
-    file_list = []
     try:
         file = open(archive_loc, 'r')
     except FileNotFoundError:
@@ -79,7 +92,9 @@ def get_userlist_archive(archive_loc) -> list:
     return file_list
 
 def update_userlist_archive(archive_loc, file_list) -> None:
+    
     # Creacion del archivo leaderboard
+    
     try:
         file = open(archive_loc, 'w')
     except:
@@ -89,9 +104,9 @@ def update_userlist_archive(archive_loc, file_list) -> None:
     finally:
         file.close()
 
-def format_user(user_name, points, user_list) -> str:
+def format_user(user_name:str, points:int, user_list:list) -> str:
     
-    user_string = user_name + " - " + str(points) + '\n'
+    user_string = user_name + ";" + str(points) + '\n'
     user_list.append(user_string)
     
     return user_string
@@ -103,3 +118,13 @@ def print_points(surface, user_data, user_init_pos) -> None:
         surface.blit(user, user_init_pos)
         new_pos += 65
         user_init_pos = (keep_pos, new_pos) # 70 al 140(pos[1]) <=es una tupla
+
+def user_list_render(user_list:list, font, color, data=[]):
+    
+    """ Carga los ultimos 6 elementos para mostrar en el leaderboard """
+    
+    last_elements = user_list[-1:-7:-1]
+    for element in reversed(last_elements):
+        data.append(font.render(element, 1, color))
+    
+    return data

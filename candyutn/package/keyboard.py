@@ -1,36 +1,36 @@
 import pygame
 from package.constants import CELL_SIZE
 
-Q_LOC = "./candyutn/img/keyboard_img/q.png"
-W_LOC = "./candyutn/img/keyboard_img/w.png"
-E_LOC = "./candyutn/img/keyboard_img/e.png"
-R_LOC = "./candyutn/img/keyboard_img/r.png"
-T_LOC = "./candyutn/img/keyboard_img/t.png"
-Y_LOC = "./candyutn/img/keyboard_img/y.png"
-U_LOC = "./candyutn/img/keyboard_img/u.png"
-I_LOC = "./candyutn/img/keyboard_img/i.png"
-O_LOC = "./candyutn/img/keyboard_img/o.png"
-P_LOC = "./candyutn/img/keyboard_img/p.png"
-A_LOC = "./candyutn/img/keyboard_img/a.png"
-S_LOC = "./candyutn/img/keyboard_img/s.png"
-D_LOC = "./candyutn/img/keyboard_img/d.png"
-F_LOC = "./candyutn/img/keyboard_img/f.png"
-G_LOC = "./candyutn/img/keyboard_img/g.png"
-H_LOC = "./candyutn/img/keyboard_img/h.png"
-J_LOC = "./candyutn/img/keyboard_img/j.png"
-K_LOC = "./candyutn/img/keyboard_img/k.png"
-L_LOC = "./candyutn/img/keyboard_img/l.png"
-Ñ_LOC = "./candyutn/img/keyboard_img/ñ.png"
-GUION_LOC = "./candyutn/img/keyboard_img/guion.png"
-Z_LOC = "./candyutn/img/keyboard_img/z.png"
-X_LOC = "./candyutn/img/keyboard_img/x.png"
-C_LOC = "./candyutn/img/keyboard_img/c.png"
-V_LOC = "./candyutn/img/keyboard_img/v.png"
-B_LOC = "./candyutn/img/keyboard_img/b.png"
-N_LOC = "./candyutn/img/keyboard_img/n.png"
-M_LOC = "./candyutn/img/keyboard_img/m.png"
-ENTER_LOC = "./candyutn/img/keyboard_img/enter.png"
-GUION_LOC = "./candyutn/img/keyboard_img/guion.png"
+Q_LOC = "./img/keyboard_img/q.png"
+W_LOC = "./img/keyboard_img/w.png"
+E_LOC = "./img/keyboard_img/e.png"
+R_LOC = "./img/keyboard_img/r.png"
+T_LOC = "./img/keyboard_img/t.png"
+Y_LOC = "./img/keyboard_img/y.png"
+U_LOC = "./img/keyboard_img/u.png"
+I_LOC = "./img/keyboard_img/i.png"
+O_LOC = "./img/keyboard_img/o.png"
+P_LOC = "./img/keyboard_img/p.png"
+A_LOC = "./img/keyboard_img/a.png"
+S_LOC = "./img/keyboard_img/s.png"
+D_LOC = "./img/keyboard_img/d.png"
+F_LOC = "./img/keyboard_img/f.png"
+G_LOC = "./img/keyboard_img/g.png"
+H_LOC = "./img/keyboard_img/h.png"
+J_LOC = "./img/keyboard_img/j.png"
+K_LOC = "./img/keyboard_img/k.png"
+L_LOC = "./img/keyboard_img/l.png"
+Ñ_LOC = "./img/keyboard_img/ñ.png"
+GUION_LOC = "./img/keyboard_img/guion.png"
+Z_LOC = "./img/keyboard_img/z.png"
+X_LOC = "./img/keyboard_img/x.png"
+C_LOC = "./img/keyboard_img/c.png"
+V_LOC = "./img/keyboard_img/v.png"
+B_LOC = "./img/keyboard_img/b.png"
+N_LOC = "./img/keyboard_img/n.png"
+M_LOC = "./img/keyboard_img/m.png"
+ENTER_LOC = "./img/keyboard_img/enter.png"
+DELETE_LOC = "./img/keyboard_img/delete.png"
 
 q_key = pygame.image.load(Q_LOC)
 w_key = pygame.image.load(W_LOC)
@@ -61,7 +61,7 @@ b_key = pygame.image.load(B_LOC)
 n_key = pygame.image.load(N_LOC)
 m_key = pygame.image.load(M_LOC)
 enter_key = pygame.image.load(ENTER_LOC)
-guion_key = pygame.image.load(GUION_LOC)
+delete_key = pygame.image.load(DELETE_LOC)
 
 q_key = pygame.transform.scale(q_key,(CELL_SIZE,CELL_SIZE))
 w_key = pygame.transform.scale(w_key,(CELL_SIZE,CELL_SIZE))
@@ -92,9 +92,9 @@ b_key = pygame.transform.scale(b_key,(CELL_SIZE,CELL_SIZE))
 n_key = pygame.transform.scale(n_key,(CELL_SIZE,CELL_SIZE))
 m_key = pygame.transform.scale(m_key,(CELL_SIZE,CELL_SIZE))
 enter_key = pygame.transform.scale(enter_key,(CELL_SIZE,CELL_SIZE))
-guion_key = pygame.transform.scale(guion_key,(CELL_SIZE,CELL_SIZE))
+delete_key = pygame.transform.scale(delete_key,(CELL_SIZE,CELL_SIZE))
 
 keyboard = [
         [q_key,w_key,e_key,r_key,t_key,y_key,u_key,i_key,o_key,p_key],
         [a_key,s_key,d_key,f_key,g_key,h_key,j_key,k_key,l_key,ñ_key],
-        [guion_key,z_key,x_key,c_key,v_key,b_key,n_key,m_key,enter_key,guion_key]]#
+        [guion_key,z_key,x_key,c_key,v_key,b_key,n_key,m_key,enter_key,delete_key]]

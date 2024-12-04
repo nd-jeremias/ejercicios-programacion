@@ -26,12 +26,12 @@ def make_matrix(base_list:list, col:int, attr:str) -> list:
             e[attr].append(randint(1,3))
     return base_list
 
-def check(matriz:list, posicion:list, attr:str, origin=1, check=0) -> bool:
+""" def check(matriz:list, posicion:list, attr:str, origin=1, check=0) -> bool:
     
-    """ Verifica que haya 3 numeros iguales, consecutivos de forma vertical.
+    ''' Verifica que haya 3 numeros iguales, consecutivos de forma vertical.
     origin, indica desde donde va verifica
     hacia "abajo"(aumenta las posicion en filas)
-    hacia "arriba"(disminuye las posicion en filas) """
+    hacia "arriba"(disminuye las posicion en filas) '''
     
     retorno = False
     for i in range(1,3):
@@ -43,8 +43,39 @@ def check(matriz:list, posicion:list, attr:str, origin=1, check=0) -> bool:
             check += 1
     if check == 2:
         retorno = True
+    return retorno """
+    
+def check(matrix:list, attr:str, pos_one:list, pos_two:list) -> int:
+    
+    retorno = 0
+    if matrix[pos_one[0]][attr][pos_one[1]] == matrix[pos_two[0]][attr][pos_two[1]]:
+        retorno = 1
+        
     return retorno
 
+def check_col(matrix:list, attr:str, pos:list) -> bool:
+    validate = 0
+    retorno = False
+    for i in range(1, 3):
+        if pos[0] == 0:
+            new_pos = (pos[0] + i, pos[1])
+            validate += check(matrix, attr, pos, new_pos)
+        elif pos[0] >= 1 and pos[0] <= 2:
+            if i == 1:
+                new_pos = (pos[0] - i, pos[1])
+            else:
+                new_pos = (pos[0] + i, pos[1])
+            validate += check(matrix, attr, pos, new_pos)
+            if validate == 0:
+                new_pos = (pos[0] + 2, pos[1])
+                validate += check(matrix, attr, pos, new_pos)
+        elif pos[0] > 2:
+            new_pos = (pos[0] - i, pos[1])
+            validate += check(matrix, attr, pos, new_pos)
+        if validate == 2:
+            retorno = True
+        return retorno
+    
 def draw_grid(surface, grid:list,matrix:list, attr:str, dragee_list:list) -> None:
     
     """ Dibuja las grageas en la grilla establecida """

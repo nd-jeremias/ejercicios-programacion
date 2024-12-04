@@ -42,6 +42,9 @@ rect_start_btn = pygame.Rect(START_BTN_POS, BUTTON_SIZE)
 leaderboard = pygame.image.load(LEADERBOARD_LOC)
 # Cartel puntaje/timer
 sign = pygame.image.load(SIGN_LOC)
+# Cartel usuario
+user_sign = pygame.image.load(USER_SIGN)
+rect_user_sign = pygame.Rect(USER_SIGN_POS, USER_SIGN_SIZE)
 
 # Teclado
 key_row = len(keyboard)

@@ -13,10 +13,11 @@ GET_RESULTS_LOC = "./img/get_results_btn.png"
 RESTART_BTN_LOC = "./img/restart_btn.png"
 FONT_LOC = "./font/candy_crush.ttf"
 LEADERBOARD_LOC = "./img/leaderboard.png"
-ARCHIVE_LOC = "./save/leaderboard.csv"
+ARCHIVE_LOC = "./save/score.csv"
 SUCCESS_LOC = "./sounds/success.mp3"
 MISTAKE_LOC = "./sounds/mistake.mp3"
 SIGN_LOC = "./img/sign.png"
+USER_SIGN = "./img/cloud.png"
 
 # Fuente
 FONT_SIZE = 30
@@ -45,9 +46,13 @@ BUTTON_POS = (562, 630)
 RESTART_BTN_POS = (562, 630)
 START_BTN_POS = (786, 336)
 GET_RESULTS_POS = (340, 336)
+
 # Usuario
 USER_NAME_SIZE = 10
+USER_NAME_POS = (520,80)
 USER_INIT_POS = (520,144)
+USER_SIGN_POS = (240, 10)
+USER_SIGN_SIZE = (800, 200)
 
 # Teclado
 K_COL = 10

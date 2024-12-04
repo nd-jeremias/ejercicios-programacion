@@ -29,6 +29,7 @@ dragee_green = pygame.transform.scale(dragee_green,(CELL_SIZE,CELL_SIZE))
 get_results_btn = pygame.transform.scale(get_results_btn,BUTTON_SIZE)
 leaderboard = pygame.transform.scale(leaderboard,LEADERBOARD_SIZE)
 sign = pygame.transform.scale(sign, SIGN_SIZE)
+user_sign = pygame.transform.scale(user_sign, USER_SIGN_SIZE)
 
 while running:
 
@@ -38,20 +39,11 @@ while running:
         # Se verifica si el usuario cerro la ventana
         if event.type == pygame.QUIT:
             running = False
-
-        if screen_flag == "main":
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if rect_start_btn.collidepoint(event.pos):
-                    # Delay para que no se presionen varios botones en el click
-                    pygame.time.delay(300)
-                    screen_flag = "input"
-                if rect_get_results_btn.collidepoint(event.pos):
-                    screen_flag = "leaderboard"
                     
         if screen_flag == "leaderboard":
         # Se verifica si fue pulsado el boton restart
             if event.type == pygame.MOUSEBUTTONDOWN:
-                pos = event.pos
+                #pos = event.pos
                 if rect_restart_btn.collidepoint(event.pos):
                     user_name = "" # BORRAR, PASAR POR PARAMETRO AL ARMAR FUNCIONES // Al reiniciar blanquea
                     points = 0
@@ -74,13 +66,23 @@ while running:
                 # Verifica boton "Del"(Delete)
                 if keyboard_grid[2][9].collidepoint(pos[0], pos[1]):
                     if len(user_name) > 0:
-                        user_name = user_name.replace(user_name[-1],"")
+                        user_name = user_name[0:-1]
 
                 # Verifica boton "ENTER"
                 if keyboard_grid[2][8].collidepoint(pos[0], pos[1]):
                     # Delay para que no se presionen varios botones en el click
                     pygame.time.delay(200)
                     screen_flag = "game"
+            
+            # Verifica ingreso por teclado
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_BACKSPACE:
+                    user_name = user_name[0:-1]
+                if event.key == pygame.K_RETURN:
+                    pygame.time.delay(200)
+                    screen_flag = "game"
+                else:
+                    user_name += event.unicode
 
         # Obtengo la posicion del mouse y verifico que colisione con la gragea
         if screen_flag == "game":
@@ -90,7 +92,7 @@ while running:
                     for j in range(len(dragee_grid[i])):
                         if dragee_grid[i][j].collidepoint(pos[0], pos[1]):
                             
-                            validate = (check(matrix,[i,j],"piezas", i))
+                            validate = (check_col(matrix,"piezas", [i,j]))
 
                             if validate:
                                 success_sfx.play()
@@ -124,6 +126,15 @@ while running:
                     
                     print("se acabo el tiempo")
                     screen_flag = "leaderboard"
+        
+        if screen_flag == "main":
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if rect_start_btn.collidepoint(event.pos):
+                    # Delay para que no se presionen varios botones en el click
+                    pygame.time.delay(200)
+                    screen_flag = "input"
+                if rect_get_results_btn.collidepoint(event.pos):
+                    screen_flag = "leaderboard"
                     
     # Se pinta el fondo de la ventana:
     screen.fill(GREEN1)
@@ -141,7 +152,12 @@ while running:
         
         # Dibujar teclado
         draw_keyboard(screen, keyboard_grid, keyboard)
-
+        # Dibujar cartel usuario
+        screen.blit(user_sign, rect_user_sign)
+        # Renderizar nombre usuario
+        render_user = display_font.render(user_name, 1, ROYALBLUE4)
+        screen.blit(render_user, USER_NAME_POS)
+        
     if screen_flag == "game":
         # Dibujar  cartel
         screen.blit(sign, SIGN_POS)

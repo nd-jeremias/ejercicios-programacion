@@ -56,7 +56,7 @@ lista = [
     {"piezas":[]},
     {"piezas":[]},
     {"piezas":[]},
-    {"piezas":[]}]    
+    {"piezas":[]}]
 
 # Inicializa la matriz aleatoria.
 matrix = make_matrix(lista, COL, "piezas")

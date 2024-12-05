@@ -82,7 +82,7 @@ while running:
                     pygame.time.delay(200)
                     screen_flag = "game"
                 else:
-                    user_name += event.unicode
+                    user_name += event.unicode.upper()
 
         # Obtengo la posicion del mouse y verifico que colisione con la gragea
         if screen_flag == "game":
@@ -92,7 +92,14 @@ while running:
                     for j in range(len(dragee_grid[i])):
                         if dragee_grid[i][j].collidepoint(pos[0], pos[1]):
                             
-                            validate = (check_col(matrix,"piezas", [i,j]))
+                            if i == 0:
+                                validate = check_extr_col(lista,KEY,(i,j))
+                            elif i == 1:
+                                validate = check_mid_col(lista,KEY,(i,j))
+                            elif i == 2:
+                                validate = check_mid_col(lista,KEY,(i,j),-1)
+                            elif i == 3:
+                                validate = check_extr_col(lista,KEY,(i,j),-1)
 
                             if validate:
                                 success_sfx.play()
@@ -104,8 +111,8 @@ while running:
                                 points -= 1
                                 mistake_sfx.play()
                                 print("VUELVA A INTENTARLO")
-                            lista = [{"piezas":[]},{"piezas":[]},{"piezas":[]},{"piezas":[]}]
-                            matrix = make_matrix(lista,COL,"piezas")
+                            lista = [{KEY:[]},{KEY:[]},{KEY:[]},{KEY:[]}]
+                            matrix = make_matrix(lista,COL,KEY)
                 
             if event.type == pygame.USEREVENT:
                 if countdown > 0:
@@ -113,9 +120,8 @@ while running:
                     print(countdown)
                 else:
                     # Creamos un string con los datos de usuario y lo renderizamos
-                    user_string = format_user(user_name, points, user_list)
+                    user_string = format_user_csv(user_name, points, user_list)
                     last_elements = user_list[-1:-7:-1]
-                    print(last_elements)
                     order_user_list(last_elements)
                     # Crea lista de impresion en pantalla
                     user_data = user_list_render(last_elements, font, ROYALBLUE4)
@@ -168,7 +174,7 @@ while running:
         render_countdown = display_font.render(str(countdown), 1, ROYALBLUE4)
         screen.blit(render_countdown, (200, 60))
         # Dibujar grilla
-        draw_grid(screen, dragee_grid, matrix, "piezas", dragee_list)
+        draw_grid(screen, dragee_grid, matrix, KEY, dragee_list)
 
     if screen_flag == "leaderboard":
         

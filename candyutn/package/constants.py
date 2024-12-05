@@ -31,6 +31,8 @@ CELL_SIZE = 100
 ORIGEN_X = (SCREEN_W - (CELL_SIZE * COL)) / 2
 ORIGEN_Y = (SCREEN_H - (CELL_SIZE * ROW)) / 2
 
+KEY = "piezas"
+
 # Cartel de puntos
 LEADERBOARD_SIZE = (375, 600)
 LEADERBOARD_POS = (450, 30)

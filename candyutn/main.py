@@ -2,7 +2,7 @@ import pygame
 from package.constants import *
 from package.functions import *
 from package.initializers import *
-from package.colores import GREEN1, ROYALBLUE4
+
 from os import system
 # Inicializacion de pygame:
 pygame.init()
@@ -20,6 +20,8 @@ display_font = pygame.font.Font(FONT_LOC, DISPLAY_FONT_SIZE)
 # Sonidos
 success_sfx = pygame.mixer.Sound(SUCCESS_LOC)
 mistake_sfx = pygame.mixer.Sound(MISTAKE_LOC)
+
+user_data = user_list_render(user_list[-1:-7:-1], font, ROYALBLUE4)
 
 # Escalar imagenes:
 fondo = pygame.transform.scale(fondo,(SCREEN_W, SCREEN_H))
@@ -43,7 +45,6 @@ while running:
         if screen_flag == "leaderboard":
         # Se verifica si fue pulsado el boton restart
             if event.type == pygame.MOUSEBUTTONDOWN:
-                #pos = event.pos
                 if rect_restart_btn.collidepoint(event.pos):
                     user_name = "" # BORRAR, PASAR POR PARAMETRO AL ARMAR FUNCIONES // Al reiniciar blanquea
                     points = 0
@@ -130,7 +131,7 @@ while running:
                     update_userlist_archive(ARCHIVE_LOC, user_list)
                     screen_flag = "leadeboard"
                     
-                    print("se acabo el tiempo")
+                    print("Se acabo el tiempo!")
                     screen_flag = "leaderboard"
         
         if screen_flag == "main":
@@ -139,7 +140,7 @@ while running:
                     # Delay para que no se presionen varios botones en el click
                     pygame.time.delay(200)
                     screen_flag = "input"
-                if rect_get_results_btn.collidepoint(event.pos):
+                elif rect_get_results_btn.collidepoint(event.pos):
                     screen_flag = "leaderboard"
                     
     # Se pinta el fondo de la ventana:
@@ -154,17 +155,20 @@ while running:
         # Dibujar boton para volver a empezar
         screen.blit(start_btn, rect_start_btn)
         
-    if screen_flag == "input":
+    elif screen_flag == "input":
         
         # Dibujar teclado
         draw_keyboard(screen, keyboard_grid, keyboard)
         # Dibujar cartel usuario
         screen.blit(user_sign, rect_user_sign)
         # Renderizar nombre usuario
-        render_user = display_font.render(user_name, 1, ROYALBLUE4)
+        if len(user_name) <= USER_NAME_SIZE:
+            render_user = display_font.render(user_name, 1, ROYALBLUE4)
+        else:
+            render_user = display_font.render(user_name, 1, INDIANRED)
         screen.blit(render_user, USER_NAME_POS)
         
-    if screen_flag == "game":
+    elif screen_flag == "game":
         # Dibujar  cartel
         screen.blit(sign, SIGN_POS)
         # Renderizar y mostrar puntaje
@@ -176,7 +180,7 @@ while running:
         # Dibujar grilla
         draw_grid(screen, dragee_grid, matrix, KEY, dragee_list)
 
-    if screen_flag == "leaderboard":
+    elif screen_flag == "leaderboard":
         
         screen.blit(fondo, (0,0)) #ESTO PISA LA GRILLA ANTERIOR
         # Dibujar cartel

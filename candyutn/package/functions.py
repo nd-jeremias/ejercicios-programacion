@@ -1,7 +1,6 @@
 import pygame
 from random import randint
 
-# Armar cuadrícula
 def make_grid(row:int, col:int, cell_size:int, origen_x:int, origen_y:int) -> list:
     
     """ Crea una cuadricula de rectangulos """
@@ -139,24 +138,12 @@ def update_userlist_archive(archive_loc:str, file_list:list) -> None:
     finally:
         file.close()
 
-# def format_user(user_name:str, points:int, user_list:list) -> str:
-    
-#     """ Da formato al str de un usuario y lo une con los puntos
-#     para imprimir en el leaderboar.
-#     Tambien ingresa la informacion en user_list"""
-    
-#     user_string = user_name.ljust(10) + " - " + str(points).rjust(5) + '\n'
-#     user_list.append(user_string)
-    
-#     return user_string
-#### Corregir esto
 def format_user_csv(user_name:str, points:int, user_list:list) -> str:
     
     """ Da formato al str de un usuario y lo une con los puntos
-    para imprimir en el leaderboar.
+    para imprimir en archivo. Devuelve un string de usuario
     Tambien ingresa la informacion en user_list"""
     
-    #user_string_print = user_name.ljust(10) + " - " + str(points).rjust(5) + '\n'
     user_string_csv = user_name + ";" + str(points) + '\n'
     user_list.append(user_string_csv)
     
@@ -175,13 +162,12 @@ def print_points(surface:object, user_data:list, user_init_pos:list) -> None:
 
 def user_list_render(user_list:list, font, color) -> list:
     
-    """ Carga los ultimos 6 elementos para mostrar en el leaderboard """
+    """ Carga los elementos para mostrar en el leaderboard 
+    y les da formato. """
+    
     data=[]
-#    last_elements = user_list[-1:-7:-1]
-    #for element in reversed(last_elements):
     for element in user_list:
         user = element.split(";")
-        print(user)
         user_string_print = user[0].ljust(10) + " - " + user[1].rjust(5)
         data.append(font.render(user_string_print, 1, color))
     

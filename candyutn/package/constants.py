@@ -1,5 +1,3 @@
-from package.colores import GRAY79
-
 # Tamaño de pantalla
 SCREEN_H = 720
 SCREEN_W = 1280
@@ -18,6 +16,12 @@ SUCCESS_LOC = "./sounds/success.mp3"
 MISTAKE_LOC = "./sounds/mistake.mp3"
 SIGN_LOC = "./img/sign.png"
 USER_SIGN = "./img/cloud.png"
+
+# Colores
+GREEN1 = (0, 255, 0)
+ROYALBLUE4 = (39, 64, 139)
+GRAY79 = (201, 201, 201)
+INDIANRED = (176, 23, 31)
 
 # Fuente
 FONT_SIZE = 30
